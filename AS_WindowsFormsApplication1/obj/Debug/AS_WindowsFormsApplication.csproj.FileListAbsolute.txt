@@ -1,0 +1,27 @@
+D:\Chandra\AnalysisServices\cSharp\AS_WindowsFormsApplication\AS_WindowsFormsApplication1\bin\Debug\AS_WindowsFormsApplication.exe.config
+D:\Chandra\AnalysisServices\cSharp\AS_WindowsFormsApplication\AS_WindowsFormsApplication1\bin\Debug\AS_WindowsFormsApplication.exe
+D:\Chandra\AnalysisServices\cSharp\AS_WindowsFormsApplication\AS_WindowsFormsApplication1\bin\Debug\AS_WindowsFormsApplication.pdb
+D:\Chandra\AnalysisServices\cSharp\AS_WindowsFormsApplication\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.Properties.Resources.resources
+D:\Chandra\AnalysisServices\cSharp\AS_WindowsFormsApplication\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.ServerForm.resources
+D:\Chandra\AnalysisServices\cSharp\AS_WindowsFormsApplication\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.csproj.GenerateResource.Cache
+D:\Chandra\AnalysisServices\cSharp\AS_WindowsFormsApplication\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.exe
+D:\Chandra\AnalysisServices\cSharp\AS_WindowsFormsApplication\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.pdb
+D:\Chandra\AnalysisServices\cSharp\AS_WindowsFormsApplication\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.csprojResolveAssemblyReference.cache
+D:\Chandra\AnalysisServices\V1 with exception fix for NamedQuery\AS_MetadataBrowser\AS_WindowsFormsApplication1\bin\Debug\AS_WindowsFormsApplication.exe.config
+D:\Chandra\AnalysisServices\V1 with exception fix for NamedQuery\AS_MetadataBrowser\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.exe
+D:\Chandra\AnalysisServices\V1 with exception fix for NamedQuery\AS_MetadataBrowser\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.pdb
+D:\Chandra\AnalysisServices\V1 with exception fix for NamedQuery\AS_MetadataBrowser\AS_WindowsFormsApplication1\bin\Debug\AS_WindowsFormsApplication.exe
+D:\Chandra\AnalysisServices\V1 with exception fix for NamedQuery\AS_MetadataBrowser\AS_WindowsFormsApplication1\bin\Debug\AS_WindowsFormsApplication.pdb
+D:\Chandra\AnalysisServices\V1 with exception fix for NamedQuery\AS_MetadataBrowser\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.csprojResolveAssemblyReference.cache
+D:\Chandra\AnalysisServices\V1 with exception fix for NamedQuery\AS_MetadataBrowser\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.Properties.Resources.resources
+D:\Chandra\AnalysisServices\V1 with exception fix for NamedQuery\AS_MetadataBrowser\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.ServerForm.resources
+D:\Chandra\AnalysisServices\V1 with exception fix for NamedQuery\AS_MetadataBrowser\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.csproj.GenerateResource.Cache
+D:\Chandra\AnalysisServices\Cube Metadata Browser\AS_MetadataBrowser\AS_WindowsFormsApplication1\bin\Debug\AS_WindowsFormsApplication.exe.config
+D:\Chandra\AnalysisServices\Cube Metadata Browser\AS_MetadataBrowser\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.exe
+D:\Chandra\AnalysisServices\Cube Metadata Browser\AS_MetadataBrowser\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.pdb
+D:\Chandra\AnalysisServices\Cube Metadata Browser\AS_MetadataBrowser\AS_WindowsFormsApplication1\bin\Debug\AS_WindowsFormsApplication.exe
+D:\Chandra\AnalysisServices\Cube Metadata Browser\AS_MetadataBrowser\AS_WindowsFormsApplication1\bin\Debug\AS_WindowsFormsApplication.pdb
+D:\Chandra\AnalysisServices\Cube Metadata Browser\AS_MetadataBrowser\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.csprojResolveAssemblyReference.cache
+D:\Chandra\AnalysisServices\Cube Metadata Browser\AS_MetadataBrowser\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.Properties.Resources.resources
+D:\Chandra\AnalysisServices\Cube Metadata Browser\AS_MetadataBrowser\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.ServerForm.resources
+D:\Chandra\AnalysisServices\Cube Metadata Browser\AS_MetadataBrowser\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.csproj.GenerateResource.Cache
