@@ -25,3 +25,6 @@ D:\Chandra\AnalysisServices\Cube Metadata Browser\AS_MetadataBrowser\AS_WindowsF
 D:\Chandra\AnalysisServices\Cube Metadata Browser\AS_MetadataBrowser\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.Properties.Resources.resources
 D:\Chandra\AnalysisServices\Cube Metadata Browser\AS_MetadataBrowser\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.ServerForm.resources
 D:\Chandra\AnalysisServices\Cube Metadata Browser\AS_MetadataBrowser\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.csproj.GenerateResource.Cache
+D:\Chandra\2019\C# Projects\AS_MetadataBrowser - GUI\AS_WindowsFormsApplication1\bin\Debug\AS_WindowsFormsApplication.exe.config
+D:\Chandra\2019\C# Projects\AS_MetadataBrowser - GUI\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.exe
+D:\Chandra\2019\C# Projects\AS_MetadataBrowser - GUI\AS_WindowsFormsApplication1\obj\Debug\AS_WindowsFormsApplication.pdb
