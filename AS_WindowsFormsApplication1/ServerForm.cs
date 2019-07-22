@@ -117,26 +117,34 @@ namespace AS_WindowsFormsApplication
 
         public void Cube_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            ComboBox C = (ComboBox)sender;
+            //ComboBox C = (ComboBox)sender;
 
-            
-            using (Server S = new Server())
-            {
-                string connectionString;
-                connectionString = "DataSource=" + ServerName.Text;
-                S.Connect(connectionString);
+            rbDimension.Checked = false;
+            Dimension.Visible = false;
+            label4.Visible = false;
+
+            rbMeasureGroups.Checked = false;
+            lblMeasureGroups.Visible = false;
+            comboBoxMeasureGroups.Visible = false;
+
+            dataGridView1.DataSource = null;
+            //using (Server S = new Server())
+            //{
+            //    string connectionString;
+            //    connectionString = "DataSource=" + ServerName.Text;
+            //    S.Connect(connectionString);
 
               
-                Cube cube = S.Databases.GetByName(ASDatabase.SelectedItem.ToString()).Cubes.GetByName(Cube.SelectedItem.ToString());
+            //    Cube cube = S.Databases.GetByName(ASDatabase.SelectedItem.ToString()).Cubes.GetByName(Cube.SelectedItem.ToString());
 
 
 
-                Dimension.DataSource = cube.Dimensions;
-                Dimension.DisplayMember = "name";
-                Dimension.ValueMember = "id";
-                Dimension.DropDownStyle = ComboBoxStyle.DropDownList;
+            //    Dimension.DataSource = cube.Dimensions;
+            //    Dimension.DisplayMember = "name";
+            //    Dimension.ValueMember = "id";
+            //    Dimension.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            }
+            //}
 
         }
 
@@ -240,6 +248,146 @@ namespace AS_WindowsFormsApplication
             return(DT);
         }
 
+        private void rbDimension_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbDimension.Checked == true && ASDatabase.SelectedIndex > -1 && Cube.SelectedIndex > -1 )
+            {
+
+                label4.Visible = true;
+                Dimension.Visible = true;
+                lblMeasureGroups.Visible = false;
+                comboBoxMeasureGroups.Visible = false;
+
+                using (Server S = new Server())
+                {
+                    string connectionString;
+                    connectionString = "DataSource=" + ServerName.Text;
+                    S.Connect(connectionString);
+
+
+                    Cube cube = S.Databases.GetByName(ASDatabase.SelectedItem.ToString()).Cubes.GetByName(Cube.SelectedItem.ToString());
+                    
+                    Dimension.DataSource = cube.Dimensions;
+                    Dimension.DisplayMember = "name";
+                    Dimension.ValueMember = "id";
+                    Dimension.DropDownStyle = ComboBoxStyle.DropDownList;
+
+                }
+            }
+        }
+
+        private void lblMeasures_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rbMeasureGroups_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbMeasureGroups.Checked == true && ASDatabase.SelectedIndex > -1 && Cube.SelectedIndex > -1 )
+            {
+
+                label4.Visible = false;
+                Dimension.Visible = false;
+                lblMeasureGroups.Visible = true;
+                comboBoxMeasureGroups.Visible = true;
+
+
+                using (Server S = new Server())
+                {
+                    string connectionString;
+                    connectionString = "DataSource=" + ServerName.Text;
+                    S.Connect(connectionString);
+
+
+                    Cube cube = S.Databases.GetByName(ASDatabase.SelectedItem.ToString()).Cubes.GetByName(Cube.SelectedItem.ToString());
+
+                    comboBoxMeasureGroups.DataSource = cube.MeasureGroups;
+                    comboBoxMeasureGroups.DisplayMember = "name";
+                    comboBoxMeasureGroups.ValueMember = "id";
+                    comboBoxMeasureGroups.DropDownStyle = ComboBoxStyle.DropDownList;
+                }
+
+
+
+            }
+        }
+
+        private void comboBoxMeasureGroups_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxMeasureGroups.SelectedIndex > -1)
+            {
+                using (Server S = new Server())
+                {
+                    string connectionString;
+                    connectionString = "DataSource=" + ServerName.Text;
+                    S.Connect(connectionString);
+
+
+                    MeasureGroup MG = S.Databases.GetByName(ASDatabase.SelectedItem.ToString()).Cubes.GetByName(Cube.SelectedItem.ToString()).MeasureGroups.GetByName(comboBoxMeasureGroups.SelectedItem.ToString());
+                    MeasureCollection MC = MG.Measures;
+
+                    DataTable MA = getMeasureAttributes(MC);
+                    dataGridView1.DataSource = MA;
+                }
+            }
+        }
+
+        public DataTable getMeasureAttributes(MeasureCollection MC)
+        {
+
+            DataTable MA = new DataTable();
+            MA.Columns.Add("Measure Name");
+            MA.Columns.Add("Source Table");
+            MA.Columns.Add("Source Column");
+            MA.Columns.Add("Aggregate User");
+
+            foreach (Measure M in MC)
+            {
+
+                DataSourceView DS = M.ParentCube.DataSourceView;
+                DataSet d = new DataSet();
+                d = DS.Schema;
+
+                DataItem DI = M.Source;
+                DataTable DT ;
+                string MeasureName = M.Name;
+                string Aggregate = M.AggregateFunction.ToString();
+                string MeasureSourceColumn;
+
+
+                if (DI.Source.GetType().ToString() == "Microsoft.AnalysisServices.ColumnBinding")
+                {
+                    ColumnBinding CB = (ColumnBinding)DI.Source;
+                    DT = d.Tables[CB.TableID];
+                    MeasureSourceColumn = CB.ColumnID;
+
+                }
+                else
+                {
+                    RowBinding RB = (RowBinding)DI.Source;
+                    DT = d.Tables[RB.TableID];
+                    MeasureSourceColumn = "Rows";
+                }
+
+
+                string MeasureSourceTable = DT.ExtendedProperties["DbTableName"].ToString();
+
+                
+
+
+
+                //MessageBox.Show(MeasureSourceTable);
+                //MessageBox.Show(MeasureSourceColumn);
+                //MessageBox.Show(Aggregate);
+
+                MA.Rows.Add(MeasureName,MeasureSourceTable, MeasureSourceColumn, Aggregate );
+                //MessageBox.Show("Test" + M.ToString());
+            }
+
+            return MA;
+        }
+
+        
         //private static DataAggregationMode GetDataSourceViewDefinitionByTableID(System.Data.DataTable DT)
         //{
 

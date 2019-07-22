@@ -44,6 +44,10 @@ namespace AS_WindowsFormsApplication
             this.label4 = new System.Windows.Forms.Label();
             this.Dimension = new System.Windows.Forms.ComboBox();
             this.lblLoading = new System.Windows.Forms.Label();
+            this.rbDimension = new System.Windows.Forms.RadioButton();
+            this.rbMeasureGroups = new System.Windows.Forms.RadioButton();
+            this.lblMeasureGroups = new System.Windows.Forms.Label();
+            this.comboBoxMeasureGroups = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,17 +83,18 @@ namespace AS_WindowsFormsApplication
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnName});
-            this.dataGridView1.Location = new System.Drawing.Point(27, 109);
+            this.dataGridView1.Location = new System.Drawing.Point(27, 166);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(503, 360);
+            this.dataGridView1.Size = new System.Drawing.Size(863, 360);
             this.dataGridView1.TabIndex = 3;
             // 
             // ColumnName
             // 
             this.ColumnName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ColumnName.HeaderText = "Attributes List";
+            this.ColumnName.HeaderText = "Details Grid";
             this.ColumnName.Name = "ColumnName";
+            this.ColumnName.Visible = false;
             // 
             // ASDatabase
             // 
@@ -133,20 +138,22 @@ namespace AS_WindowsFormsApplication
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(551, 57);
+            this.label4.Location = new System.Drawing.Point(371, 110);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 13);
             this.label4.TabIndex = 8;
             this.label4.Text = "Dimension : ";
+            this.label4.Visible = false;
             // 
             // Dimension
             // 
             this.Dimension.FormattingEnabled = true;
-            this.Dimension.Location = new System.Drawing.Point(622, 49);
+            this.Dimension.Location = new System.Drawing.Point(460, 110);
             this.Dimension.Name = "Dimension";
             this.Dimension.Size = new System.Drawing.Size(167, 21);
             this.Dimension.Sorted = true;
             this.Dimension.TabIndex = 9;
+            this.Dimension.Visible = false;
             this.Dimension.SelectedIndexChanged += new System.EventHandler(this.Dimension_SelectedIndexChanged);
             // 
             // lblLoading
@@ -159,12 +166,61 @@ namespace AS_WindowsFormsApplication
             this.lblLoading.Text = "Loading...";
             this.lblLoading.Visible = false;
             // 
+            // rbDimension
+            // 
+            this.rbDimension.AutoSize = true;
+            this.rbDimension.Location = new System.Drawing.Point(53, 106);
+            this.rbDimension.Name = "rbDimension";
+            this.rbDimension.Size = new System.Drawing.Size(79, 17);
+            this.rbDimension.TabIndex = 11;
+            this.rbDimension.TabStop = true;
+            this.rbDimension.Text = "Dimensions";
+            this.rbDimension.UseVisualStyleBackColor = true;
+            this.rbDimension.CheckedChanged += new System.EventHandler(this.rbDimension_CheckedChanged);
+            // 
+            // rbMeasureGroups
+            // 
+            this.rbMeasureGroups.AutoSize = true;
+            this.rbMeasureGroups.Location = new System.Drawing.Point(176, 106);
+            this.rbMeasureGroups.Name = "rbMeasureGroups";
+            this.rbMeasureGroups.Size = new System.Drawing.Size(103, 17);
+            this.rbMeasureGroups.TabIndex = 12;
+            this.rbMeasureGroups.TabStop = true;
+            this.rbMeasureGroups.Text = "Measure Groups";
+            this.rbMeasureGroups.UseVisualStyleBackColor = true;
+            this.rbMeasureGroups.CheckedChanged += new System.EventHandler(this.rbMeasureGroups_CheckedChanged);
+            // 
+            // lblMeasureGroups
+            // 
+            this.lblMeasureGroups.AutoSize = true;
+            this.lblMeasureGroups.Location = new System.Drawing.Point(374, 110);
+            this.lblMeasureGroups.Name = "lblMeasureGroups";
+            this.lblMeasureGroups.Size = new System.Drawing.Size(85, 13);
+            this.lblMeasureGroups.TabIndex = 13;
+            this.lblMeasureGroups.Text = "Measure Groups";
+            this.lblMeasureGroups.Visible = false;
+            this.lblMeasureGroups.Click += new System.EventHandler(this.lblMeasures_Click);
+            // 
+            // comboBoxMeasureGroups
+            // 
+            this.comboBoxMeasureGroups.FormattingEnabled = true;
+            this.comboBoxMeasureGroups.Location = new System.Drawing.Point(465, 110);
+            this.comboBoxMeasureGroups.Name = "comboBoxMeasureGroups";
+            this.comboBoxMeasureGroups.Size = new System.Drawing.Size(167, 21);
+            this.comboBoxMeasureGroups.TabIndex = 14;
+            this.comboBoxMeasureGroups.Visible = false;
+            this.comboBoxMeasureGroups.SelectedIndexChanged += new System.EventHandler(this.comboBoxMeasureGroups_SelectedIndexChanged);
+            // 
             // ServerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(902, 538);
+            this.Controls.Add(this.comboBoxMeasureGroups);
+            this.Controls.Add(this.lblMeasureGroups);
+            this.Controls.Add(this.rbMeasureGroups);
+            this.Controls.Add(this.rbDimension);
             this.Controls.Add(this.lblLoading);
             this.Controls.Add(this.Dimension);
             this.Controls.Add(this.label4);
@@ -210,6 +266,10 @@ namespace AS_WindowsFormsApplication
         private Label label4;
         private ComboBox Dimension;
         private Label lblLoading;
+        private RadioButton rbDimension;
+        private RadioButton rbMeasureGroups;
+        private Label lblMeasureGroups;
+        private ComboBox comboBoxMeasureGroups;
 
 
     }
