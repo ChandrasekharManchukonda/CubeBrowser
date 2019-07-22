@@ -13,10 +13,14 @@ namespace AS_WindowsFormsApplication
 {
     public partial class ServerForm : Form
     {
+        string connectionString;
+
         public ServerForm()
         {
             InitializeComponent();
+            connectionString = "DataSource=" + ServerName.Text;
         }
+
 
         public void ServerForm_Load(object sender, EventArgs e)
         {
@@ -36,8 +40,6 @@ namespace AS_WindowsFormsApplication
 
              using (Server S = new Server())
             {
-                string connectionString;
-                connectionString = "DataSource=" + ServerName.Text;
                 S.Connect(connectionString);
                 // SetDataGridView_ASDatabases(S);
                 SetCombobox_ASDatabases(S);
@@ -96,11 +98,8 @@ namespace AS_WindowsFormsApplication
             
             using (Server S = new Server())
             {
-                string connectionString;
-                connectionString = "DataSource=" + ServerName.Text;
                 S.Connect(connectionString);
 
-                
                 Database D = S.Databases.GetByName(C.SelectedItem.ToString());
                 //MessageBox.Show("DB Name Combo SelectedItem: " + C.SelectedItem.ToString());
                 //MessageBox.Show("DB Name C: " + C.Text);
@@ -120,13 +119,11 @@ namespace AS_WindowsFormsApplication
             //ComboBox C = (ComboBox)sender;
 
             rbDimension.Checked = false;
-            Dimension.Visible = false;
-            label4.Visible = false;
-
             rbMeasureGroups.Checked = false;
-            lblMeasureGroups.Visible = false;
-            comboBoxMeasureGroups.Visible = false;
-
+            rbCalculatedMembers.Checked = false;
+            Dimension.Visible = false;
+            
+            
             dataGridView1.DataSource = null;
             //using (Server S = new Server())
             //{
@@ -150,21 +147,33 @@ namespace AS_WindowsFormsApplication
 
         private void Dimension_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            using (Server S = new Server())
+            if (ASDatabase.SelectedIndex > -1 && Cube.SelectedIndex > -1 && Dimension.SelectedIndex > -1)
             {
-                string connectionString;
-                connectionString = "DataSource=" + ServerName.Text;
-                S.Connect(connectionString);
 
-                CubeDimension CD = S.Databases.GetByName(ASDatabase.SelectedItem.ToString()).Cubes.GetByName(Cube.SelectedItem.ToString()).Dimensions.GetByName(Dimension.SelectedItem.ToString());
-                Dimension D = CD.Dimension;
+                using (Server S = new Server())
+                {
+                    S.Connect(connectionString);
+                    if (rbDimension.Checked == true)
+                    {
+                        CubeDimension CD = S.Databases.GetByName(ASDatabase.SelectedItem.ToString()).Cubes.GetByName(Cube.SelectedItem.ToString()).Dimensions.GetByName(Dimension.SelectedItem.ToString());
+                        Dimension D = CD.Dimension;
 
-                
-                DataTable AT = GetAttributesByDimension(D);
-                //dataGridView1.Columns.Remove("Attributes List");
-                dataGridView1.DataSource = AT;
-                //dataGridView1.DataBind();
+
+                        DataTable AT = GetAttributesByDimension(D);
+                        //dataGridView1.Columns.Remove("Attributes List");
+                        dataGridView1.DataSource = AT;
+                        //dataGridView1.DataBind();
+                    }
+
+                    if (rbMeasureGroups.Checked == true)
+                    {
+                            MeasureGroup MG = S.Databases.GetByName(ASDatabase.SelectedItem.ToString()).Cubes.GetByName(Cube.SelectedItem.ToString()).MeasureGroups.GetByName(Dimension.SelectedItem.ToString());
+                            MeasureCollection MC = MG.Measures;
+
+                            DataTable MA = getMeasureAttributes(MC);
+                            dataGridView1.DataSource = MA;
+                     }
+                }
             }
         }
 
@@ -253,18 +262,11 @@ namespace AS_WindowsFormsApplication
             if (rbDimension.Checked == true && ASDatabase.SelectedIndex > -1 && Cube.SelectedIndex > -1 )
             {
 
-                label4.Visible = true;
                 Dimension.Visible = true;
-                lblMeasureGroups.Visible = false;
-                comboBoxMeasureGroups.Visible = false;
-
+                
                 using (Server S = new Server())
                 {
-                    string connectionString;
-                    connectionString = "DataSource=" + ServerName.Text;
                     S.Connect(connectionString);
-
-
                     Cube cube = S.Databases.GetByName(ASDatabase.SelectedItem.ToString()).Cubes.GetByName(Cube.SelectedItem.ToString());
                     
                     Dimension.DataSource = cube.Dimensions;
@@ -286,51 +288,39 @@ namespace AS_WindowsFormsApplication
             if (rbMeasureGroups.Checked == true && ASDatabase.SelectedIndex > -1 && Cube.SelectedIndex > -1 )
             {
 
-                label4.Visible = false;
-                Dimension.Visible = false;
-                lblMeasureGroups.Visible = true;
-                comboBoxMeasureGroups.Visible = true;
-
-
+                Dimension.Visible = true;
                 using (Server S = new Server())
                 {
-                    string connectionString;
-                    connectionString = "DataSource=" + ServerName.Text;
                     S.Connect(connectionString);
-
-
                     Cube cube = S.Databases.GetByName(ASDatabase.SelectedItem.ToString()).Cubes.GetByName(Cube.SelectedItem.ToString());
 
-                    comboBoxMeasureGroups.DataSource = cube.MeasureGroups;
-                    comboBoxMeasureGroups.DisplayMember = "name";
-                    comboBoxMeasureGroups.ValueMember = "id";
-                    comboBoxMeasureGroups.DropDownStyle = ComboBoxStyle.DropDownList;
-                }
-
-
-
-            }
-        }
-
-        private void comboBoxMeasureGroups_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBoxMeasureGroups.SelectedIndex > -1)
-            {
-                using (Server S = new Server())
-                {
-                    string connectionString;
-                    connectionString = "DataSource=" + ServerName.Text;
-                    S.Connect(connectionString);
-
-
-                    MeasureGroup MG = S.Databases.GetByName(ASDatabase.SelectedItem.ToString()).Cubes.GetByName(Cube.SelectedItem.ToString()).MeasureGroups.GetByName(comboBoxMeasureGroups.SelectedItem.ToString());
-                    MeasureCollection MC = MG.Measures;
-
-                    DataTable MA = getMeasureAttributes(MC);
-                    dataGridView1.DataSource = MA;
+                    Dimension.DataSource = cube.MeasureGroups;
+                    Dimension.DisplayMember = "name";
+                    Dimension.ValueMember = "id";
+                    Dimension.DropDownStyle = ComboBoxStyle.DropDownList;
                 }
             }
         }
+
+        //private void comboBoxMeasureGroups_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    if (Dimension.SelectedIndex > -1)
+        //    {
+        //        using (Server S = new Server())
+        //        {
+        //            string connectionString;
+        //            connectionString = "DataSource=" + ServerName.Text;
+        //            S.Connect(connectionString);
+
+
+        //            MeasureGroup MG = S.Databases.GetByName(ASDatabase.SelectedItem.ToString()).Cubes.GetByName(Cube.SelectedItem.ToString()).MeasureGroups.GetByName(Dimension.SelectedItem.ToString());
+        //            MeasureCollection MC = MG.Measures;
+
+        //            DataTable MA = getMeasureAttributes(MC);
+        //            dataGridView1.DataSource = MA;
+        //        }
+        //    }
+        //}
 
         public DataTable getMeasureAttributes(MeasureCollection MC)
         {
@@ -385,6 +375,31 @@ namespace AS_WindowsFormsApplication
             }
 
             return MA;
+        }
+
+        private void bdCalculatedMembers_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbCalculatedMembers.Checked == true && ASDatabase.SelectedIndex > -1 && Cube.SelectedIndex > -1)
+            {
+                Dimension.Visible = true;
+                MessageBox.Show("In method");
+                Dimension.DataSource = null;
+                using (Server S = new Server())
+                {
+                    S.Connect(connectionString);
+                    Cube cube = S.Databases.GetByName(ASDatabase.SelectedItem.ToString()).Cubes.GetByName(Cube.SelectedItem.ToString());
+
+                    MdxScript M = cube.MdxScripts[0];
+                    foreach (CalculationProperty CP in M.CalculationProperties)
+                    {
+                        MessageBox.Show(CP.CalculationType.ToString());
+                        if (CP.CalculationType == CalculationType.Member)
+                        {
+                            MessageBox.Show(CP.CalculationReference);
+                        }
+                    }
+                }
+            }
         }
 
         
