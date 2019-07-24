@@ -123,8 +123,8 @@ namespace AS_WindowsFormsApplication
             rbCalculatedMembers.Checked = false;
             Dimension.Visible = false;
             
-            
             dataGridView1.DataSource = null;
+            PartitionsGrid.DataSource = null;
             //using (Server S = new Server())
             //{
             //    string connectionString;
@@ -172,9 +172,74 @@ namespace AS_WindowsFormsApplication
 
                             DataTable MA = getMeasureAttributes(MC);
                             dataGridView1.DataSource = MA;
+
+                            DataTable PT = getMeasureGroupPartitions(MG);
+                            PartitionsGrid.DataSource = PT;
+                            
                      }
                 }
             }
+        }
+
+        private DataTable getMeasureGroupPartitions(MeasureGroup MG)
+        {
+            DataTable PT = new DataTable();
+            PT.Columns.Add("Partition Name");
+            PT.Columns.Add("Source");
+            PT.Columns.Add("Estimated Size in Bytes");
+            PT.Columns.Add("Estimated Rows");
+            PT.Columns.Add("Status");
+
+
+            //PT.Columns.Add("DataSource");
+            //PT.Columns.Add("DataSourceView");
+            //PT.Columns.Add("DirectQueryUsage");
+            //PT.Columns.Add("ID");
+            //PT.Columns.Add("IsLoaded");
+            //PT.Columns.Add("LastProcessed");
+            //PT.Columns.Add("LastSchemaUpdate");
+            //PT.Columns.Add("Parent");
+            //PT.Columns.Add("Slice");
+            //PT.Columns.Add("Type");
+
+
+            PartitionCollection PC = MG.Partitions;
+            foreach (Partition P in PC)
+            {
+                
+                if (P.Source.ToString() == "Microsoft.AnalysisServices.QueryBinding")
+                {
+
+                    PT.Rows.Add(P.Name, ((QueryBinding)P.Source).QueryDefinition.ToString(), P.EstimatedSize, P.EstimatedRows, P.State
+                        //, P.DataSource, P.DataSourceView, P.DirectQueryUsage
+                        //, P.ID
+                        //, P.IsLoaded, P.LastProcessed
+                        //, P.LastSchemaUpdate, P.Parent, P.Slice, P.Type
+                        );
+                }
+                else
+                {
+                    //MessageBox.Show("Test");
+
+                    //MeasureGroupBinding MGB = MG.Source;
+                    DsvTableBinding DVB = (DsvTableBinding)P.Source; //(DsvTableBinding)MGB.Clone();
+
+                    //MessageBox.Show(DVB.TableID.ToString());
+                    //MessageBox.Show(P.DataSourceView.Schema.Tables[DVB.TableID].ToString());
+
+                    PT.Rows.Add(P.Name, P.DataSourceView.Schema.Tables[DVB.TableID].ToString(), P.EstimatedSize, P.EstimatedRows, P.State
+                        //, P.DataSource, P.DataSourceView, P.DirectQueryUsage
+                        //, P.ID
+                        //, P.IsLoaded, P.LastProcessed
+                        //, P.LastSchemaUpdate, P.Parent, P.Slice, P.Type
+                        );
+
+                }
+
+
+            }
+
+            return PT;
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -259,10 +324,13 @@ namespace AS_WindowsFormsApplication
 
         private void rbDimension_CheckedChanged(object sender, EventArgs e)
         {
+
             if (rbDimension.Checked == true && ASDatabase.SelectedIndex > -1 && Cube.SelectedIndex > -1 )
             {
 
                 Dimension.Visible = true;
+                PartitionsGrid.Visible = false;
+                PartitionsGrid.DataSource = null;
                 
                 using (Server S = new Server())
                 {
@@ -344,34 +412,31 @@ namespace AS_WindowsFormsApplication
                 string Aggregate = M.AggregateFunction.ToString();
                 string MeasureSourceColumn;
 
-
-                if (DI.Source.GetType().ToString() == "Microsoft.AnalysisServices.ColumnBinding")
+                if (M.Visible == true)
                 {
-                    ColumnBinding CB = (ColumnBinding)DI.Source;
-                    DT = d.Tables[CB.TableID];
-                    MeasureSourceColumn = CB.ColumnID;
+                    if (DI.Source.GetType().ToString() == "Microsoft.AnalysisServices.ColumnBinding")
+                    {
+                        ColumnBinding CB = (ColumnBinding)DI.Source;
+                        DT = d.Tables[CB.TableID];
+                        MeasureSourceColumn = CB.ColumnID;
 
+                    }
+                    else
+                    {
+                        RowBinding RB = (RowBinding)DI.Source;
+                        DT = d.Tables[RB.TableID];
+                        MeasureSourceColumn = "Rows";
+                    }
+
+                    string MeasureSourceTable = DT.ExtendedProperties["DbTableName"].ToString();
+
+                    //MessageBox.Show(MeasureSourceTable);
+                    //MessageBox.Show(MeasureSourceColumn);
+                    //MessageBox.Show(Aggregate);
+
+                    MA.Rows.Add(MeasureName, MeasureSourceTable, MeasureSourceColumn, Aggregate);
                 }
-                else
-                {
-                    RowBinding RB = (RowBinding)DI.Source;
-                    DT = d.Tables[RB.TableID];
-                    MeasureSourceColumn = "Rows";
-                }
-
-
-                string MeasureSourceTable = DT.ExtendedProperties["DbTableName"].ToString();
-
-                
-
-
-
-                //MessageBox.Show(MeasureSourceTable);
-                //MessageBox.Show(MeasureSourceColumn);
-                //MessageBox.Show(Aggregate);
-
-                MA.Rows.Add(MeasureName,MeasureSourceTable, MeasureSourceColumn, Aggregate );
-                //MessageBox.Show("Test" + M.ToString());
+               
             }
 
             return MA;
@@ -400,6 +465,16 @@ namespace AS_WindowsFormsApplication
                     }
                 }
             }
+        }
+
+        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void PartitionsGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
 
         
