@@ -57,7 +57,7 @@ namespace AS_WindowsFormsApplication
             this.ServerName.Name = "ServerName";
             this.ServerName.Size = new System.Drawing.Size(140, 20);
             this.ServerName.TabIndex = 1;
-            this.ServerName.Text = "CHOGMILOADDEV01";
+            //this.ServerName.Text = "CHOGMILOADDEV01";
             // 
             // label1
             // 

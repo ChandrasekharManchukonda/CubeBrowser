@@ -18,7 +18,7 @@ namespace AS_WindowsFormsApplication
         public ServerForm()
         {
             InitializeComponent();
-            connectionString = "DataSource=" + ServerName.Text;
+            
         }
 
 
@@ -37,6 +37,9 @@ namespace AS_WindowsFormsApplication
         {
             lblLoading.Visible = true;
             this.Refresh();
+
+            connectionString = "DataSource=" + ServerName.Text;
+            MessageBox.Show(connectionString);
 
              using (Server S = new Server())
             {
@@ -188,7 +191,7 @@ namespace AS_WindowsFormsApplication
             PT.Columns.Add("Source");
             PT.Columns.Add("Estimated Size in Bytes");
             PT.Columns.Add("Estimated Rows");
-            PT.Columns.Add("Status");
+            PT.Columns.Add("Processing Status");
 
 
             //PT.Columns.Add("DataSource");
