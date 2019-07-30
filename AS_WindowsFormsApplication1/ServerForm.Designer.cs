@@ -202,6 +202,7 @@ namespace AS_WindowsFormsApplication
             this.PartitionsGrid.Size = new System.Drawing.Size(335, 360);
             this.PartitionsGrid.TabIndex = 10;
             this.PartitionsGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.PartitionsGrid_CellContentClick);
+            this.PartitionsGrid.Visible = false;
             // 
             // ServerForm
             // 

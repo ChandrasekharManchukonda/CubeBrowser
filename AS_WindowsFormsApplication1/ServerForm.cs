@@ -39,7 +39,7 @@ namespace AS_WindowsFormsApplication
             this.Refresh();
 
             connectionString = "DataSource=" + ServerName.Text;
-            MessageBox.Show(connectionString);
+            //MessageBox.Show(connectionString);
 
              using (Server S = new Server())
             {
@@ -189,8 +189,8 @@ namespace AS_WindowsFormsApplication
             DataTable PT = new DataTable();
             PT.Columns.Add("Partition Name");
             PT.Columns.Add("Source");
-            PT.Columns.Add("Estimated Size in Bytes");
-            PT.Columns.Add("Estimated Rows");
+          //  PT.Columns.Add("Estimated Size in Bytes");
+          //  PT.Columns.Add("Estimated Rows");
             PT.Columns.Add("Processing Status");
 
 
@@ -205,6 +205,7 @@ namespace AS_WindowsFormsApplication
             //PT.Columns.Add("Slice");
             //PT.Columns.Add("Type");
 
+            PartitionsGrid.Visible = true;
 
             PartitionCollection PC = MG.Partitions;
             foreach (Partition P in PC)
@@ -213,7 +214,8 @@ namespace AS_WindowsFormsApplication
                 if (P.Source.ToString() == "Microsoft.AnalysisServices.QueryBinding")
                 {
 
-                    PT.Rows.Add(P.Name, ((QueryBinding)P.Source).QueryDefinition.ToString(), P.EstimatedSize, P.EstimatedRows, P.State
+                    PT.Rows.Add(P.Name, ((QueryBinding)P.Source).QueryDefinition.ToString()//, P.EstimatedSize, P.EstimatedRows
+                        , P.State
                         //, P.DataSource, P.DataSourceView, P.DirectQueryUsage
                         //, P.ID
                         //, P.IsLoaded, P.LastProcessed
@@ -230,15 +232,14 @@ namespace AS_WindowsFormsApplication
                     //MessageBox.Show(DVB.TableID.ToString());
                     //MessageBox.Show(P.DataSourceView.Schema.Tables[DVB.TableID].ToString());
 
-                    PT.Rows.Add(P.Name, P.DataSourceView.Schema.Tables[DVB.TableID].ToString(), P.EstimatedSize, P.EstimatedRows, P.State
+                    PT.Rows.Add(P.Name, P.DataSourceView.Schema.Tables[DVB.TableID].ToString()//, P.EstimatedSize, P.EstimatedRows
+                        , P.State
                         //, P.DataSource, P.DataSourceView, P.DirectQueryUsage
                         //, P.ID
                         //, P.IsLoaded, P.LastProcessed
                         //, P.LastSchemaUpdate, P.Parent, P.Slice, P.Type
                         );
-
                 }
-
 
             }
 
